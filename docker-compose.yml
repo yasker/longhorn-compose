@@ -7,8 +7,10 @@ replicas:
   - /bin/bash
   - -c
   command:
-  - /usr/local/bin/replica --name volume1 --create --size 1G --slab 256M | tee replica.log
+  - /usr/local/bin/replica --name volume1 --create --size 1G --slab 256M | tee storage_replica.log
   working_dir: /storage
+  volumes:
+  - /storage
   image: yasker/infra
 controller:
   restart: always
@@ -19,8 +21,10 @@ controller:
   - /bin/bash
   - -c
   command:
-  - /storage/start_controller.sh replicas | tee controller.log
+  - /storage/start_controller.sh replicas | tee storage_controller.log
   image: yasker/infra
   working_dir: /storage
+  volumes:
+  - /storage
   links:
   - replicas:replicas

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 if [ -z $1 ]
 then
     echo Failed to find replica service name
@@ -15,10 +13,11 @@ then
     echo Fail to get DNS record for $replica_service
     exit 1
 fi
+echo "Found replica hosts $hosts"
 host_args=""
 for host in $hosts
 do
-    host_args=$host_args"-host $host "
+    host_args=$host_args"--host $host "
 done
 if [ -z "$host_args" ]
 then
