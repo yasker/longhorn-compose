@@ -1,7 +1,7 @@
-replicas:
+replica:
   restart: always
   labels:
-    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=replicas
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=replica
     io.rancher.container.pull_image: always
   entrypoint:
   - /bin/bash
@@ -21,10 +21,10 @@ controller:
   - /bin/bash
   - -c
   command:
-  - /storage/start_controller.sh replicas | tee storage_controller.log
+  - /storage/start_controller.sh replica | tee storage_controller.log
   image: yasker/infra
   working_dir: /storage
   volumes:
   - /storage
   links:
-  - replicas:replicas
+  - replica:replica

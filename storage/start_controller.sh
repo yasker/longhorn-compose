@@ -13,7 +13,6 @@ then
     echo Fail to get DNS record for $replica_service
     exit 1
 fi
-echo "Found replica hosts $hosts"
 host_args=""
 for host in $hosts
 do
@@ -24,4 +23,5 @@ then
     echo Cannot get any DNS record for $replica_service
     exit 1
 fi
+echo "Calling controller with arguments: $host_args"
 /usr/local/bin/controller $host_args
