@@ -1,0 +1,4 @@
+replicas:
+  scale: 2
+controller:
+  scale: 1

@@ -1,0 +1,26 @@
+replicas:
+  restart: always
+  labels:
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=replicas
+    io.rancher.container.pull_image: always
+  entrypoint:
+  - /bin/bash
+  - -c
+  command:
+  - /usr/local/bin/replica --name volume1 --create --size 1G --slab 256M | tee replica.log
+  working_dir: /storage
+  image: yasker/infra
+controller:
+  restart: always
+  labels:
+    io.rancher.scheduler.affinity:container: testcon
+    io.rancher.container.pull_image: always
+  entrypoint:
+  - /bin/bash
+  - -c
+  command:
+  - /storage/start_controller.sh replicas | tee controller.log
+  image: yasker/infra
+  working_dir: /storage
+  links:
+  - replicas:replicas
